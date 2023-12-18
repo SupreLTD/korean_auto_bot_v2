@@ -1,8 +1,11 @@
 from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
-from aiogram.filters import MagicData
+from decimal import Decimal
+
 from keyboards import price_kb as KB
+from parsers.exchange_rates import get_rates
+from parsers.tax import get_tax
 
 router = Router()
 
@@ -72,8 +75,11 @@ async def result(message: types.Message, state: FSMContext):
         engine = fsm_data['engine']
         power = fsm_data['power']
         capacity = fsm_data['capacity']
-        price = message.text
-        # await message.answer(f'{age} {engine} {capacity} {power} {price}')
+        rates = await get_rates()
+        price = Decimal(message.text) * rates.KRW
+        tax = get_tax(age, engine, power, capacity, price)
+
+
 
     else:
         await message.answer('Введите корректное значение!')
