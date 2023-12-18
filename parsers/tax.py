@@ -36,14 +36,11 @@ async def get_tax(age: str, engine: str, power: str, capacity: str, price: str) 
             "power_unit": "1",
             "value": capacity,
             "price": price,
-            "currency": "RUB"}
+            "currency": "KRW"}
 
     async with ClientSession() as session:
         async with session.post(url='https://calcus.ru/rastamozhka-auto', data=data) as response:
             data = json.loads(await response.text(encoding='utf-8'))
 
             return Tax(**data)
-
-
-
 
