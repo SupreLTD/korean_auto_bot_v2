@@ -10,3 +10,10 @@ def main():
     )
 
     return kb.as_markup()
+
+
+def restart():
+    kb = InlineKeyboardBuilder()
+    kb.add(types.InlineKeyboardButton(text='🔄 Новый расчет', callback_data='start'))
+
+    return kb.as_markup()

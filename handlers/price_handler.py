@@ -92,7 +92,7 @@ async def result(message: types.Message, state: FSMContext):
         result_message = f'🕵️ Ваш запрос: 👇\n🚗 Возраст автомобиля: {fsm_data["age_answer"]}\n' \
                           f'🚕 Тип двигателя: {fsm_data["engine_answer"]}\n🏎 Мощность двигателя: {power} л.с.\n' \
                           f'🚙 Объем двигателя: {capacity} м3\n💰 Стоимость автомобиля в руб: {float(car_price_rub):.02f}\n\n' \
-                          f'Расчет с учетом курса валют:\n1 ₽ = {rates.KRW:.02f} ₩\n1 ₩ = {1/rates.KRW} ₽\n' \
+                          f'Расчет с учетом курса валют:\n1 ₽ = {1/rates.KRW:.02f} ₩\n1 ₩ = {rates.KRW} ₽\n' \
                           f'1 $ = {rates.USD:.02f} ₽\n' \
                           f'* Курс валют актуален на: {datetime.datetime.now().replace(microsecond=0)}\n' \
                           f'с сайта ЦБ РФ\n\n' \
@@ -100,7 +100,8 @@ async def result(message: types.Message, state: FSMContext):
                           f'• Таможенная пошлина: {tax.tax} ₽\n• Расходы в Корее: {spending_in_korea:.02f}\n' \
                           f'• Комиссия РФ: {kom_ru} ₽\n' \
                           f'• Доставка {delivery} ₽\n\n ✅ Итоговая стоимость автомобиля: {total}'
-
+        await message.answer(result_message)
+        await state.clear()
 
 
 
