@@ -8,6 +8,7 @@ from decimal import Decimal
 from keyboards import price_kb as KB
 from parsers.exchange_rates import get_rates
 from parsers.tax import get_tax
+from keyboards.start_kb import restart
 
 router = Router()
 
@@ -99,8 +100,8 @@ async def result(message: types.Message, state: FSMContext):
                           f'• Таможенный сбор: {tax.sbor} ₽\n• Утилизационный сбор: {tax.util} ₽\n' \
                           f'• Таможенная пошлина: {tax.tax} ₽\n• Расходы в Корее: {spending_in_korea:.02f}\n' \
                           f'• Комиссия РФ: {kom_ru} ₽\n' \
-                          f'• Доставка {delivery} ₽\n\n ✅ Итоговая стоимость автомобиля: {total}'
-        await message.answer(result_message)
+                          f'• Доставка {delivery} ₽\n\n ✅ Итоговая стоимость автомобиля: {total:.2f}'
+        await message.answer(result_message, reply_markup=restart())
         await state.clear()
 
 
